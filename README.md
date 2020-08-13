@@ -39,6 +39,16 @@ install.packages("remotes")
 remotes::install_github("LCBC-UIO/tsdrtools")
 ```
 
+for installation of this package inside TSD, download the newest source
+file from <https://github.com/LCBC-UiO/tsdrtools/>.
+
+Transfer the package to TSD (import it), and install as a source
+package.
+
+``` r
+install.packages("/path/to/tsdrtools.tar.gz", repo = NULL)
+```
+
 ## Example
 
 This package contains two main functions:
