@@ -1,0 +1,19 @@
+Package: tsdrtools
+Type: Package
+Title: Convenience package for installing R-packages on UiO TSD
+Version: 0.1.0
+Authors@R: c(person("Athanasia Mo", "Mowinckel", 
+                    email = "a.m.mowinckel@psykologi.uio.no", 
+                    role = c("aut", "cre"),
+                    comment = c(ORCID = "0000-0002-5756-0223")))
+Description: Some packages are hard to install on the secure closed server of the University of Oslo, TSD
+    This package has some functions to help users more easily install packages to TSD that cannot be installed using
+    the mini-CRAN service within TSD.
+License: CC BY 4.0
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Suggests: 
+    testthat
+Imports: 
+    tools
