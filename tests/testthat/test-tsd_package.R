@@ -9,7 +9,9 @@ test_that("tsd_package_prepare works", {
 
   ffs <- list.files(wrkdir)
   expect_true("pkg_install_order.list" %in% ffs)
-  expect_true(any(grepl("dplyr", ffs)))
+  order <- readLines(file.path(wrkdir, "pkg_install_order.list"))
+
+  expect_true(any(grepl("dplyr", order[length(order)])))
 
   # Remove test folder
   j <- unlink(wrkdir, recursive = TRUE)
@@ -26,21 +28,21 @@ test_that("tsd_package_install works", {
   j <- tsd_package_install(zip_file, verbose = FALSE)
   expect_false(any("failed" %in% j$success))
 
- pkgs <- readLines(file.path(wrkdir, "pkg_install_order.list"))
- pkgs <- strsplit(gsub("\\.tar\\.gz", "", pkgs), "_")
- pkgs <- data.frame(Package = sapply(pkgs, function(x) x[1]),
-                    Version_new = sapply(pkgs, function(x) x[2]))
+  pkgs <- readLines(file.path(wrkdir, "pkg_install_order.list"))
+  pkgs <- strsplit(gsub("\\.tar\\.gz", "", pkgs), "_")
+  pkgs <- data.frame(Package = sapply(pkgs, function(x) x[1]),
+                     Version_new = sapply(pkgs, function(x) x[2]))
 
- k <- as.data.frame(installed.packages())
- k <- k[k$Package %in% pkgs$Package, c("Package", "Version")]
+  k <- as.data.frame(installed.packages())
+  k <- k[k$Package %in% pkgs$Package, c("Package", "Version")]
 
- k <- merge(k, pkgs)
- k$check <- k$Version == k$Version_new
+  k <- merge(k, pkgs)
+  k$check <- k$Version == k$Version_new
 
- expect_true(all(k$check))
+  expect_true(all(k$check))
 
- # Remove test folder
- unlink(c(wrkdir,zip_file), recursive = TRUE)
+  # Remove test folder
+  unlink(c(wrkdir,zip_file), recursive = TRUE)
 })
 
 

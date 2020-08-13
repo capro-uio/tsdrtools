@@ -14,6 +14,10 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.0
 Suggests: 
-    testthat
+    testthat,
+    covr
 Imports: 
-    tools
+    tools,
+    utils
+URL: https://github.com/LCBC-UiO/tsdrtools
+BugReports: https://github.com/LCBC-UiO/tsdrtools/issues

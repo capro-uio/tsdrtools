@@ -17,7 +17,8 @@
 #'
 #' @return returns nothing, but creates a folder and zip archive
 #' @export
-#'
+#' @importFrom utils available.packages zip download.packages
+#' @importFrom tools package_dependencies
 #' @examples
 #'
 #' tsd_package_prepare("devtools")
@@ -39,6 +40,7 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
   pkgs <- tools::package_dependencies(package,
                                       db = available.packages(repos = repos, ...),
                                       verbose = verbose)[[1]]
+  pkgs <- c(pkgs, package)
   pkgs <- pkgs[!pkgs %in% core_pkgs()]
 
   if(!dir.exists(folder)) dir.create(folder, recursive = TRUE)
@@ -90,6 +92,7 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
 #'
 #' @return vector of successful or failed package installs
 #' @export
+#' @importFrom utils install.packages unzip installed.packages
 #'
 #' @examples
 #' # prepare a package first
@@ -108,9 +111,20 @@ tsd_package_install <- function(zip_file, verbose = TRUE, ...){
   pkgs <- list.files(folder, pattern = "tar.gz", full.names = TRUE)
   pkgs <- pkgs[sapply(order, grep, x = pkgs)]
 
-  j <- sapply(pkgs, utils::install.packages, verbose = verbose, repos = NULL, ...)
-  j <- lapply(j, function(x) ifelse(is.null(x), "success\n", "failed\n"))
-  j <- data.frame(pks = names(j), success = as.character(j))
+  j <- data.frame(pkg = pkgs,
+                  success = NA)
+  for(k in 1:length(pkgs)){
+    j <- utils::install.packages(pkgs[k],
+                               verbose = verbose,
+                               repos = NULL, ...)
+  }
+
+  pkgs <- unlist(lapply(strsplit(order, "_"), function(x) x[1]))
+  pkgs_i <- as.data.frame(installed.packages(), stringsAsFactors = FALSE)
+
+  j <- data.frame(success = ifelse(pkgs %in% pkgs_i$Package, "success", "failed"),
+                  pkg = paste0(pkgs, "\n"), stringsAsFactors = FALSE
+  )
 
   k <- apply(j, 1, function(x) cat(x, sep="\t"))
   invisible(j)

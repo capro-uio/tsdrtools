@@ -2,3 +2,10 @@
 
 export(tsd_package_install)
 export(tsd_package_prepare)
+importFrom(tools,package_dependencies)
+importFrom(utils,available.packages)
+importFrom(utils,download.packages)
+importFrom(utils,install.packages)
+importFrom(utils,installed.packages)
+importFrom(utils,unzip)
+importFrom(utils,zip)
