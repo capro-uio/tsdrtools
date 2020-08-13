@@ -1,0 +1,40 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+devtools::load_all(".")
+```
+
+# tsdrtools
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of tsdrtools is to ...
+
+## Installation
+
+You can install the development version of tsdrtools 
+```{r eval = FALSE}
+install.packages("remotes")
+remotes::install_github("LCBC-UIO/tsdrtools")
+```
+
+
+## Example
+
+This is a basic example which shows you how to solve a common problem:
+
+```{r example}
+library(tsdrtools)
+## basic example code
+```
