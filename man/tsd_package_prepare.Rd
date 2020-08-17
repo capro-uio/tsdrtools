@@ -37,14 +37,12 @@ to them be installed within TSD using
 \code{\link{tsd_package_install}}.
 }
 \examples{
-
+\dontrun{
 tsd_package_prepare("devtools")
 
 tsd_package_prepare("dplyr", folder = "dplyr_pkg")
 
 tsd_package_prepare("dplyr", repos = "https://cran.uib.no/", verbose = FALSE)
 
-# cleanup folders after completion
-unlink("devtools*", recursive = TRUE)
-unlink("dplyr*", recursive = TRUE)
+}
 }

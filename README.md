@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tsdrtools
+# tsdrtools <img src='man/figures/logo.png' align="right" height="138.5" />
 
 <!-- badges: start -->
 
@@ -68,7 +68,7 @@ library(tsdrtools)
 tsd_package_prepare("dplyr")
 
 # within TSD
-tsd_package_install("dplyr.zip")
+tsd_package_prepare("dplyr.zip")
 ```
 
 ## Limitations

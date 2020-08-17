@@ -20,16 +20,14 @@
 #' @importFrom utils available.packages zip download.packages
 #' @importFrom tools package_dependencies
 #' @examples
-#'
+#' \dontrun{
 #' tsd_package_prepare("devtools")
 #'
 #' tsd_package_prepare("dplyr", folder = "dplyr_pkg")
 #'
 #' tsd_package_prepare("dplyr", repos = "https://cran.uib.no/", verbose = FALSE)
 #'
-#' # cleanup folders after completion
-#' unlink("devtools*", recursive = TRUE)
-#' unlink("dplyr*", recursive = TRUE)
+#' }
 tsd_package_prepare <- function(package, folder = package, repos = "https://cran.rstudio.com/",
                                 verbose = TRUE, zip = TRUE, ...) {
 
@@ -95,12 +93,12 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
 #' @importFrom utils install.packages unzip installed.packages
 #'
 #' @examples
+#' \dontrun{
 #' # prepare a package first
 #' tsd_package_prepare("devtools")
 #'
 #' tsd_package_install("devtools.zip")
-#'#' # cleanup folders after completion
-#' unlink("devtools*", recursive = TRUE)
+#' }
 tsd_package_install <- function(zip_file, verbose = TRUE, ...){
 
   # if folder is zipped, unzip

@@ -25,10 +25,10 @@ function, install said packages using
 this function.
 }
 \examples{
+\dontrun{
 # prepare a package first
 tsd_package_prepare("devtools")
 
 tsd_package_install("devtools.zip")
-#' # cleanup folders after completion
-unlink("devtools*", recursive = TRUE)
+}
 }
