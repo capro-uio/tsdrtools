@@ -1,17 +1,18 @@
 wrkdir <- testthat::test_path("testfldr")
 zip_file <- paste0(wrkdir, ".zip")
+package <- "DT"
 
 test_that("tsd_package_prepare works", {
   expect_error(tsd_package_prepare(), "prepare is missing")
 
-  expect_output(tsd_package_prepare("dplyr", folder = wrkdir),
+  expect_output(tsd_package_prepare(package, folder = wrkdir),
                 "Finding all dependencies.")
 
   ffs <- list.files(wrkdir)
   expect_true("pkg_install_order.list" %in% ffs)
   order <- readLines(file.path(wrkdir, "pkg_install_order.list"))
 
-  expect_true(any(grepl("dplyr", order[length(order)])))
+  expect_true(any(grepl(package, order[length(order)])))
 
   # Remove test folder
   j <- unlink(wrkdir, recursive = TRUE)
