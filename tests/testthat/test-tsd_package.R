@@ -1,6 +1,6 @@
 wrkdir <- testthat::test_path("testfldr")
 zip_file <- paste0(wrkdir, ".zip")
-package <- "DT"
+package <- "gridExtra"
 
 test_that("tsd_package_prepare works", {
   expect_error(tsd_package_prepare(), "prepare is missing")
