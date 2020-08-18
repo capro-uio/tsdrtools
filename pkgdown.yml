@@ -1,0 +1,10 @@
+pandoc: '2.2'
+pkgdown: 1.5.1
+pkgdown_sha: ~
+articles:
+  minicran-tsd-install: minicran-tsd-install.html
+  rstudio-tsd-install: rstudio-tsd-install.html
+  tidyverse-tsd-install: tidyverse-tsd-install.html
+  tsdrtools: tsdrtools.html
+last_built: 2020-08-18T10:59Z
+
