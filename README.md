@@ -7,7 +7,8 @@
 
 [![R build
 status](https://github.com/LCBC-UiO/tsdrtools/workflows/R-CMD-check/badge.svg)](https://github.com/LCBC-UiO/tsdrtools/actions)
-<!-- [![Travis build status](https://travis-ci.com/LCBC-UiO/tsdrtools.svg?branch=master)](https://travis-ci.com/LCBC-UiO/tsdrtools) -->
+[![Travis build
+status](https://travis-ci.com/LCBC-UiO/tsdrtools.svg?branch=master)](https://travis-ci.com/LCBC-UiO/tsdrtools)
 [![AppVeyor build
 status](https://ci.appveyor.com/api/projects/status/github/LCBC-UiO/tsdrtools?branch=master&svg=true)](https://ci.appveyor.com/project/LCBC-UiO/tsdrtools)
 <!-- [![Codecov test coverage](https://codecov.io/gh/LCBC-UiO/tsdrtools/branch/master/graph/badge.svg)](https://codecov.io/gh/LCBC-UiO/tsdrtools?branch=master) -->
