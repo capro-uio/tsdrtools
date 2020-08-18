@@ -1,5 +1,5 @@
 ---
-title: "tsdrtools"
+title: "Using tsdrtools"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{tsdrtools}

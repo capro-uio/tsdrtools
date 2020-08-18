@@ -22,6 +22,7 @@ test_that("tsd_package_prepare works", {
 
 
 
+
 test_that("tsd_package_install works", {
 
   expect_false(any(grepl(wrkdir, list.dirs(test_path()))))
@@ -46,5 +47,23 @@ test_that("tsd_package_install works", {
   unlink(c(wrkdir,zip_file), recursive = TRUE)
 })
 
+test_that("core package list works", {
+  pkgs <- c("base",
+      "compiler",
+      "datasets",
+      "graphics",
+      "grDevices",
+      "grid",
+      "methods",
+      "parallel",
+      "splines",
+      "translations",
+      "utils",
+      "stats",
+      "stats4",
+      "tcltk",
+      "tools")
 
+  expect_true(all(core_pkgs() %in% pkgs))
 
+})

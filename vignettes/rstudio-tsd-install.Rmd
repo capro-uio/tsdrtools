@@ -1,8 +1,8 @@
 ---
-title: "rstudio-tsd-install"
+title: "Installing RStudio on TSD"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Installing RStudio on TSD}
+  %\VignetteIndexEntry{rstudio-tsd-install}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
