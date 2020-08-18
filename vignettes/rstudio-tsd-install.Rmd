@@ -26,7 +26,7 @@ Contact USIT and request that all users on your project be moved to RHEL7 (you c
 Remember that new users will still be allocated a RHEL6 VM, so when you get new coworkers, make sure they are given the correct VM from the start, or else RStudio will not work for them.
 
 ## Get the latest RStudio
-Go to [Rstudio's webpages](https://rstudio.com/products/rstudio/download/#download)  and download the latest version availale for Fedora 19/Red Hat 7. 
+Go to [Rstudio's webpages](https://rstudio.com/products/rstudio/download/#download)  and download the latest **tarball** version availale for Fedora 19/Red Hat 7. 
 Import this file into TSD for install. 
 
 
@@ -34,9 +34,22 @@ Import this file into TSD for install.
 # Make a folder for common tools for your project, with a subfolder for rstudio
 mkdir -p /cluster/projects/pXXX/tools/rstudio
 
-# Install the rstudio version into a specific file
-# Nothe the version number will change over time
-rpm --prefix=/cluster/projects/pXXX/tools/rstudio  rstudio-1.3.1073-x86_64.rpm
+# Move the rstudio tar
+mv /tsd/pXXX/data/durable/file-import/pXXX-member-group/rstudio-1.3.1073-x86_64.tar.gz /cluster/projects/pXXX/tools/rstudio
+
+# Go to the folder
+cd /cluster/projects/pXXX/tools/rstudio
+
+# Extract the tar-ball
+tar xvzf rstudio-1.3.1073-x86_64.tar.gz
+
+# Navigate to the extracted folder using cd command
+cd rstudio-1.3.1073
+
+# Now run the following command to install the tarball
+./configure
+make
+sudo make install
 ```
 
 There should now be a folder `/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073`. 
