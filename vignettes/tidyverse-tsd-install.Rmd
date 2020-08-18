@@ -1,0 +1,91 @@
+---
+title: "Installing the Tidyverse on TSD"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tidyverse-tsd-install}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+The tidyverse meta-package has become a well-used suite of packages for data handling and visualisation.
+However, the tidyverse has some system and package dependencies that makes it tricky to install on TSD. 
+Mainly because it depends on the [stringi](https://cran.r-project.org/web/packages/stringi/index.html) package, which needs internet access to install text information that cannot be stored within the main package itself. 
+
+## Prepare the tidyverse packages for install
+Firstly, prepare all the necessary packages and dependncies for install on TSD using the `tsd_package_prepate()` function.
+
+```{r setup}
+library(tsdrtools)
+tsd_package_prepare("tidyverse")
+```
+
+All the tidyverse packages and their dependencies will now download into a file called `tidyverse.zip`. 
+Import this file into your TSD project.
+
+## Prepare your TSD environment for tidyverse
+
+### Linux OS libs
+Several of the tidyverse packages require your linux system to have certain OS libraries installed for them to work. 
+You will need to contact USIT with information on which such system libraries you require, and which project to have them installed for (we recommend installing for the entire project, rather than individual users).
+
+Needed OS libs:
+
+- libssh2-devel  
+- libssl-dev  
+- libxml2-dev  
+- libcurl-devel  
+- libpng-devel (optional)  
+- librgl-dev (optional)
+
+
+### C++ compiler
+Several of the tidyverse packages also need a c++ compiler to work (dplyr for instance). 
+You can access such a compiler through the TSD software modules. 
+
+```{bash}
+module load gcc
+```
+
+By loading in `gcc` (GNU c++ compiler) _before_ starting R, this problem is solved. 
+We highly recommend creating a `.bash_profile` in your home directory that automatically loads in `gcc` for you at terminal start-up if you regularly use R-packages that require it. 
+
+```{sh}
+# create file
+touch $HOME/.bash_profile
+
+# open to edit
+gedit $HOME/.bash_profile
+```
+
+Add
+```{bash}
+#!/bin/bash
+
+# load gcc for R-pkgs
+module load gcc
+```
+
+save and restart your terminal. 
+`gcc` should now always be available when you start R from the terminal. 
+
+## Install
+Once all the libs are installed by IT, and you load gcc before starting R, you are ready to get tidyverse installed.
+
+```{r}
+tsd_package_prepare("path/to/tidyverse.zip")
+```
+
+This should now hopefully install without errors. 
+If you still cannot install tidyverse with these steps, report an [issue](https://github.com/LCBC-UiO/tsdrtools/issues).
+If you know of additional needed steps for successful install, either do a direct PR for adding that information to this document, or , report an [issue](https://github.com/LCBC-UiO/tsdrtools/issues).
+We'd love feedback to improve the instructions!
+

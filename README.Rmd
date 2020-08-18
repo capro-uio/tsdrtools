@@ -63,7 +63,7 @@ library(tsdrtools)
 tsd_package_prepare("dplyr")
 
 # within TSD
-tsd_package_prepare("dplyr.zip")
+tsd_package_install("dplyr.zip")
 ```
 
 ## Limitations

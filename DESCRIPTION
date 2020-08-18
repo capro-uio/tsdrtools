@@ -15,9 +15,12 @@ LazyData: true
 RoxygenNote: 7.1.0
 Suggests: 
     testthat,
-    covr
+    covr,
+    knitr,
+    rmarkdown
 Imports: 
     tools,
     utils
 URL: https://github.com/LCBC-UiO/tsdrtools
 BugReports: https://github.com/LCBC-UiO/tsdrtools/issues
+VignetteBuilder: knitr

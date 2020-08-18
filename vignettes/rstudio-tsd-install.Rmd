@@ -1,0 +1,59 @@
+---
+title: "rstudio-tsd-install"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Installing RStudio on TSD}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+options(rmarkdown.html_vignette.check_title = FALSE)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  eval = FALSE
+)
+```
+
+While installing RStudio is not like installing a package, so this package it self cannot help you with that.
+However, since RStudio has become the most used IDE for R, and is not readily available on TSD, we have compiled here a tutorial on how to get Rstudio working for your TSD project. 
+
+## Switching to RHEL7
+By default all new TSD linux users are allocated a Virtual Machine (VM) using Redhat 6. 
+Unfortunately, there is just a single, very old RStudio that works on this VM. 
+Contact USIT and request that all users on your project be moved to RHEL7 (you can also do this for insgle users if you dont want to move all).
+Remember that new users will still be allocated a RHEL6 VM, so when you get new coworkers, make sure they are given the correct VM from the start, or else RStudio will not work for them.
+
+## Get the latest RStudio
+Go to [Rstudio's webpages](https://rstudio.com/products/rstudio/download/#download)  and download the latest version availale for Fedora 19/Red Hat 7. 
+Import this file into TSD for install. 
+
+
+```{bash}
+# Make a folder for common tools for your project, with a subfolder for rstudio
+mkdir -p /cluster/projects/pXXX/tools/rstudio
+
+# Install the rstudio version into a specific file
+# Nothe the version number will change over time
+rpm --prefix=/cluster/projects/pXXX/tools/rstudio  rstudio-1.3.1073-x86_64.rpm
+```
+
+There should now be a folder `/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073`. 
+
+## create alias to open rstudio.
+Now that RStudio exists on the system, your users need to be able to open the program from the terminal. 
+To do so, you need to make the RStudio executable file available to them. 
+
+This means that users need to place the following line in their `.bash_profile` to make it available to them
+
+```{bash}
+alias rstudio=/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073/bin/rstudio
+```
+
+Saving this in `$HOME/.bash_profile`, restarting a terminal, and now Rstudio should be available by terminal command `rstudio`. 
+
+If you still cannot make it work with these steps, report an [issue](https://github.com/LCBC-UiO/tsdrtools/issues).
+If you know of additional needed steps for successful install, either do a direct PR for adding that information to this document, or , report an [issue](https://github.com/LCBC-UiO/tsdrtools/issues).
+We'd love feedback to improve the instructions!
+
