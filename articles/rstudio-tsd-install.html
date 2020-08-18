@@ -70,6 +70,9 @@
       <a href="../articles/rstudio-tsd-install.html">Installing RStudio on TSD</a>
     </li>
     <li>
+      <a href="../articles/slurm-setup.html">Using R-packages in SLURM scripts</a>
+    </li>
+    <li>
       <a href="../articles/tidyverse-tsd-install.html">Installing the Tidyverse on TSD</a>
     </li>
   </ul>
@@ -114,13 +117,26 @@
 <div id="get-the-latest-rstudio" class="section level2">
 <h2 class="hasAnchor">
 <a href="#get-the-latest-rstudio" class="anchor"></a>Get the latest RStudio</h2>
-<p>Go to <a href="https://rstudio.com/products/rstudio/download/#download">Rstudio’s webpages</a> and download the latest version availale for Fedora 19/Red Hat 7. Import this file into TSD for install.</p>
+<p>Go to <a href="https://rstudio.com/products/rstudio/download/#download">Rstudio’s webpages</a> and download the latest <strong>tarball</strong> version availale for Fedora 19/Red Hat 7. Import this file into TSD for install.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Make a folder for common tools for your project, with a subfolder for rstudio</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">mkdir</span> -p /cluster/projects/pXXX/tools/rstudio</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Install the rstudio version into a specific file</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="co"># Nothe the version number will change over time</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="ex">rpm</span> --prefix=/cluster/projects/pXXX/tools/rstudio  rstudio-1.3.1073-x86_64.rpm</a></code></pre></div>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Move the rstudio tar</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="fu">mv</span> /tsd/pXXX/data/durable/file-import/pXXX-member-group/rstudio-1.3.1073-x86_64.tar.gz /cluster/projects/pXXX/tools/rstudio</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7"><span class="co"># Go to the folder</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="bu">cd</span> /cluster/projects/pXXX/tools/rstudio</a>
+<a class="sourceLine" id="cb1-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># Extract the tar-ball</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="fu">tar</span> xvzf rstudio-1.3.1073-x86_64.tar.gz</a>
+<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co"># Navigate to the extracted folder using cd command</span></a>
+<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="bu">cd</span> rstudio-1.3.1073</a>
+<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"># Now run the following command to install the tarball</span></a>
+<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="ex">./configure</span></a>
+<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="fu">make</span></a>
+<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="fu">sudo</span> make install</a></code></pre></div>
 <p>There should now be a folder <code>/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073</code>.</p>
 </div>
 <div id="create-alias-to-open-rstudio-" class="section level2">

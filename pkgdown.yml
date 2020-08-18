@@ -4,7 +4,8 @@ pkgdown_sha: ~
 articles:
   minicran-tsd-install: minicran-tsd-install.html
   rstudio-tsd-install: rstudio-tsd-install.html
+  slurm-setup: slurm-setup.html
   tidyverse-tsd-install: tidyverse-tsd-install.html
   tsdrtools: tsdrtools.html
-last_built: 2020-08-18T11:12Z
+last_built: 2020-08-18T12:19Z
 
