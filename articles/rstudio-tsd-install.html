@@ -128,23 +128,34 @@
 <a class="sourceLine" id="cb1-8" data-line-number="8"><span class="bu">cd</span> /cluster/projects/pXXX/tools/rstudio</a>
 <a class="sourceLine" id="cb1-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb1-10" data-line-number="10"><span class="co"># Extract the tar-ball</span></a>
-<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="fu">tar</span> xvzf rstudio-1.3.1073-x86_64.tar.gz</a>
-<a class="sourceLine" id="cb1-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="co"># Navigate to the extracted folder using cd command</span></a>
-<a class="sourceLine" id="cb1-14" data-line-number="14"><span class="bu">cd</span> rstudio-1.3.1073</a>
-<a class="sourceLine" id="cb1-15" data-line-number="15"></a>
-<a class="sourceLine" id="cb1-16" data-line-number="16"><span class="co"># Now run the following command to install the tarball</span></a>
-<a class="sourceLine" id="cb1-17" data-line-number="17"><span class="ex">./configure</span></a>
-<a class="sourceLine" id="cb1-18" data-line-number="18"><span class="fu">make</span></a>
-<a class="sourceLine" id="cb1-19" data-line-number="19"><span class="fu">sudo</span> make install</a></code></pre></div>
+<a class="sourceLine" id="cb1-11" data-line-number="11"><span class="fu">tar</span> xvzf rstudio-1.3.1073-x86_64.tar.gz</a></code></pre></div>
 <p>There should now be a folder <code>/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073</code>.</p>
+<p>You could theoretically have several versions of RStudio installed on your TSD project simultaneously. In order to help yourself and your users over time, we suggest having the newest version symlinked to <code>current</code>, so that when you install a new version, all you need as an administrator is to update the symlink after install, and all users will have their RStudio updated.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co"># Set the new Rstudio to be the current one with a symbolic link</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">ln</span> -s rstudio-1.3.1073 current</a></code></pre></div>
+<p>To confirm the symlink has been made correctly, have a look in the folder using the <code>-l</code> option. The symlinked current version will point to which folder it is symlinked to, meaning if you peak inside the <code>current</code> folder, you are actually peaking into the <code>rstudio-1.3.1073</code> version.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">ls</span> -l </a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ex">-rwxrwxrwx</span>   1 p32-user  staff    4096 Jul 30 09:46 current -<span class="op">&gt;</span> rstudio-1.3.1073</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="ex">-rwxrwxrwx</span>   1 p32-user  staff    4096 Apr 22 09:14 rstudio-1.3.1073</a></code></pre></div>
+<p>When you install a new version of RStudio after this, you will first need to remove the symlink, before you can make a new one.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">rm</span> -r current</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="fu">ln</span> -s rstudio-1.3.1100 current</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">ls</span> -l</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="ex">-rwxrwxrwx</span>   1 p32-user  staff    4096 Aug 19 12:04 current -<span class="op">&gt;</span> rstudio-1.3.1100</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="ex">-rwxrwxrwx</span>   1 p32-user  staff    4096 Apr 22 09:14 rstudio-1.3.1073</a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="ex">-rwxrwxrwx</span>   1 p32-user  staff    4096 Aug 19 10:33 rstudio-1.3.1100</a></code></pre></div>
 </div>
 <div id="create-alias-to-open-rstudio-" class="section level2">
 <h2 class="hasAnchor">
 <a href="#create-alias-to-open-rstudio-" class="anchor"></a>create alias to open rstudio.</h2>
 <p>Now that RStudio exists on the system, your users need to be able to open the program from the terminal. To do so, you need to make the RStudio executable file available to them.</p>
-<p>This means that users need to place the following line in their <code>.bash_profile</code> to make it available to them</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="bu">alias</span> rstudio=/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073/bin/rstudio</a></code></pre></div>
+<p>This means that users need to place one of the following line in their <code>.bash_profile</code> to make it available to them</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Make an alias</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="bu">alias</span> rstudio=/cluster/projects/pXXX/tools/rstudio/current/bin/rstudio</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># OR add to the path of executables</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="bu">export</span> <span class="va">PATH=</span>/cluster/projects/pXXX/tools/rstudio/current/bin/:<span class="va">$PATH</span></a></code></pre></div>
 <p>Saving this in <code>$HOME/.bash_profile</code>, restarting a terminal, and now Rstudio should be available by terminal command <code>rstudio</code>.</p>
 <p>If you still cannot make it work with these steps, report an <a href="https://github.com/LCBC-UiO/tsdrtools/issues">issue</a>. If you know of additional needed steps for successful install, either do a direct PR for adding that information to this document, or , report an <a href="https://github.com/LCBC-UiO/tsdrtools/issues">issue</a>. We’d love feedback to improve the instructions!</p>
 </div>
