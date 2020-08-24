@@ -27,6 +27,7 @@ devtools::load_all(".")
 
 The goal of tsdrtools is to make it easier for R users of TSD to install packages that fail install using the TSD mini-CRAN. 
 Certain R-packages require compilation outside of TSD before they can be installed, and as such can be burdensom for some users to administer.
+While the package is developed with the offline TSD server in mind, this package should also likely aid others needing to install packages o other offline servers. 
 
 Since packages often have a muriad of dependencies, this process can becomes increasingly cumbersome, as all these extra packages also need to be obtained, which again might require special compilation. 
 

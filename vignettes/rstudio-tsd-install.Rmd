@@ -42,26 +42,58 @@ cd /cluster/projects/pXXX/tools/rstudio
 
 # Extract the tar-ball
 tar xvzf rstudio-1.3.1073-x86_64.tar.gz
-
-# Navigate to the extracted folder using cd command
-cd rstudio-1.3.1073
-
-# Now run the following command to install the tarball
-./configure
-make
-sudo make install
 ```
 
 There should now be a folder `/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073`. 
+
+
+You could theoretically have several versions of RStudio installed on your TSD project simultaneously. 
+In order to help yourself and your users over time, we suggest having the newest version symlinked to `current`, so that when you install a new version, all you need as an administrator is to update the symlink after install, and all users will have their RStudio updated.
+
+```{bash}
+# Set the new Rstudio to be the current one with a symbolic link
+ln -s rstudio-1.3.1073 current
+```
+
+To confirm the symlink has been made correctly, have a look in the folder using the `-l` option. 
+The symlinked current version will point to which folder it is symlinked to, meaning if you peak inside the `current` folder, you are actually peaking into the `rstudio-1.3.1073` version.
+
+```{bash}
+ls -l 
+```
+
+```{bash}
+-rwxrwxrwx   1 p32-user  staff    4096 Jul 30 09:46 current -> rstudio-1.3.1073
+-rwxrwxrwx   1 p32-user  staff    4096 Apr 22 09:14 rstudio-1.3.1073
+```
+
+When you install a new version of RStudio after this, you will first need to remove the symlink, before you can make a new one.
+
+```{bash}
+rm -r current
+ln -s rstudio-1.3.1100 current
+```
+
+```{bash}
+ls -l
+
+-rwxrwxrwx   1 p32-user  staff    4096 Aug 19 12:04 current -> rstudio-1.3.1100
+-rwxrwxrwx   1 p32-user  staff    4096 Apr 22 09:14 rstudio-1.3.1073
+-rwxrwxrwx   1 p32-user  staff    4096 Aug 19 10:33 rstudio-1.3.1100
+```
 
 ## create alias to open rstudio.
 Now that RStudio exists on the system, your users need to be able to open the program from the terminal. 
 To do so, you need to make the RStudio executable file available to them. 
 
-This means that users need to place the following line in their `.bash_profile` to make it available to them
+This means that users need to place one of the following line in their `.bash_profile` to make it available to them
 
 ```{bash}
-alias rstudio=/cluster/projects/pXXX/tools/rstudio/rstudio-1.3.1073/bin/rstudio
+# Make an alias
+alias rstudio=/cluster/projects/pXXX/tools/rstudio/current/bin/rstudio
+
+# OR add to the path of executables
+export PATH=/cluster/projects/pXXX/tools/rstudio/current/bin/:$PATH
 ```
 
 Saving this in `$HOME/.bash_profile`, restarting a terminal, and now Rstudio should be available by terminal command `rstudio`. 
