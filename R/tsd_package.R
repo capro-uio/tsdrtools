@@ -64,7 +64,7 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
   if(zip){
     if(verbose) cat("zipping folder to prepare for TSD import\n")
     all_files <- list.files(folder, recursive = TRUE, full.names = TRUE)
-    utils::zip(zipfile = paste0(folder, ".zip"), files = all_files)
+    utils::zip(zipfile = paste0(gsub("/$", "", folder), ".zip"), files = all_files, flags = "-r9Xj")
   }
 
   if(verbose) cat("\nPackage archive created.",
