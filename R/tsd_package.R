@@ -45,7 +45,7 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
 
   ## Download the packages, saving their order
   if(verbose) cat("Downloading packages:\n")
-  l_pkgs <- utils::download.packages(pkgs, folder, quiet = verbose, repos = repos, ...)[,2]
+  l_pkgs <- utils::download.packages(pkgs, folder, quiet = !verbose, repos = repos, ...)[,2]
 
   # Check that all packages are downloaded and in the correct folder
   d_pkgs <- list.files(folder, pattern = "tar.gz")
