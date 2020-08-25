@@ -1,7 +1,7 @@
 Package: tsdrtools
 Type: Package
 Title: Convenience package for installing R-packages on UiO TSD
-Version: 0.1.0
+Version: 0.1.01
 Authors@R: c(person("Athanasia Mo", "Mowinckel", 
                     email = "a.m.mowinckel@psykologi.uio.no", 
                     role = c("aut", "cre"),

@@ -34,7 +34,7 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
   if(missing(package)) stop("package to prepare is missing.")
 
   ## Get the list of packages to download, including any dependencies:
-  if(verbose) cat("Finding all dependencies.  Please wait...")
+  if(verbose) cat("Finding all dependencies.  Please wait...\n")
   pkgs <- tools::package_dependencies(package,
                                       db = available.packages(repos = repos, ...),
                                       verbose = verbose)[[1]]
