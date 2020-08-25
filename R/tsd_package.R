@@ -100,10 +100,12 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
 #' tsd_package_install("devtools.zip")
 #' }
 tsd_package_install <- function(zip_file, verbose = TRUE, ...){
+browser()
+  stopifnot(file.exists(zip_file))
 
   # if folder is zipped, unzip
-  utils::unzip(zip_file)
   folder <- gsub("\\.zip", "", zip_file)
+  k <- utils::unzip(zip_file, exdir = folder)
 
   order <- readLines(file.path(folder, "pkg_install_order.list"))
   pkgs <- list.files(folder, pattern = "tar.gz", full.names = TRUE)
