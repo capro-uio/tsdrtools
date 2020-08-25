@@ -8,7 +8,7 @@
 #' \code{\link{tsd_package_install}}.
 #'
 #' @param package name of package to install
-#' @param folder folder to place all neccessary files in
+#' @param folder folder to place all necessary files in
 #' @param repos CRAN mirror to download from
 #' @param verbose logical if status messages should be printed
 #' @param zip logical, if folder should be zipped at the end
@@ -68,8 +68,8 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
   }
 
   if(verbose) cat("\nPackage archive created.",
-      "Import the package zip file to TSD (https://data.tsd.usit.no/)",
-      "and continue with the tsd_install_package function.\n")
+                  "Import the package zip file to TSD (https://data.tsd.usit.no/)",
+                  "and continue with the tsd_install_package function.\n")
 
 }
 
@@ -100,7 +100,6 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
 #' tsd_package_install("devtools.zip")
 #' }
 tsd_package_install <- function(zip_file, verbose = TRUE, ...){
-browser()
   stopifnot(file.exists(zip_file))
 
   # if folder is zipped, unzip
@@ -111,19 +110,29 @@ browser()
   pkgs <- list.files(folder, pattern = "tar.gz", full.names = TRUE)
   pkgs <- pkgs[sapply(order, grep, x = pkgs)]
 
-  j <- data.frame(pkg = pkgs,
-                  success = NA)
+  ff <- list()
+
   for(k in 1:length(pkgs)){
-    j <- utils::install.packages(pkgs[k],
-                               verbose = verbose,
-                               repos = NULL, ...)
+    ff[[k]] <- tryCatch(
+        utils::install.packages(pkgs[k],
+                                verbose = TRUE,
+                                quiet = FALSE,
+                                type = "source",
+                                repos = NULL, ...),
+        error = function(e) e$message,
+        warning = function(w) w$message,
+        message = function(m) m$message
+      )
   }
 
-  pkgs <- unlist(lapply(strsplit(order, "_"), function(x) x[1]))
-  pkgs_i <- as.data.frame(installed.packages(), stringsAsFactors = FALSE)
+  pkgs_test <- unlist(lapply(strsplit(order, "_"), function(x) x[1]))
+  suc <- ifelse(sapply(unlist(ff), function(x) grepl("non-zero", x)),
+                "failed", "success")
 
-  j <- data.frame(success = ifelse(pkgs %in% pkgs_i$Package, "success", "failed"),
-                  pkg = paste0(pkgs, "\n"), stringsAsFactors = FALSE
+  j <- data.frame(
+    success = suc,
+    pkg = paste0(pkgs_test, "\n"),
+    stringsAsFactors = FALSE
   )
 
   k <- apply(j, 1, function(x) cat(x, sep="\t"))
@@ -132,18 +141,18 @@ browser()
 
 core_pkgs <- function(){
   c("base",
-  "compiler",
-  "datasets",
-  "graphics",
-  "grDevices",
-  "grid",
-  "methods",
-  "parallel",
-  "splines",
-  "stats",
-  "stats4",
-  "tcltk",
-  "tools",
-  "translations",
-  "utils")
+    "compiler",
+    "datasets",
+    "graphics",
+    "grDevices",
+    "grid",
+    "methods",
+    "parallel",
+    "splines",
+    "stats",
+    "stats4",
+    "tcltk",
+    "tools",
+    "translations",
+    "utils")
 }

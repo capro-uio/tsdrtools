@@ -16,7 +16,7 @@ tsd_package_prepare(
 \arguments{
 \item{package}{name of package to install}
 
-\item{folder}{folder to place all neccessary files in}
+\item{folder}{folder to place all necessary files in}
 
 \item{repos}{CRAN mirror to download from}
 
