@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Prepare R package for TSD install — tsd_package_prepare • tsdrtools</title>
+<title>Changelog • tsdrtools</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,11 +46,7 @@
 
 
 
-<meta property="og:title" content="Prepare R package for TSD install — tsd_package_prepare" />
-<meta property="og:description" content="THis function will download a package
-with all its dependencies to a zipped archive,
-to them be installed within TSD using
-tsd_package_install." />
+<meta property="og:title" content="Changelog" />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -70,7 +66,7 @@ tsd_package_install." />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -146,76 +142,26 @@ tsd_package_install." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Prepare R package for TSD install</h1>
-    <small class="dont-index">Source: <a href='https://github.com/LCBC-UiO/tsdrtools/blob/master/R/tsd_package.R'><code>R/tsd_package.R</code></a></small>
-    <div class="hidden name"><code>tsd_package_prepare.Rd</code></div>
+      <h1 data-toc-skip>Changelog <small></small></h1>
+      <small>Source: <a href='https://github.com/LCBC-UiO/tsdrtools/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="ref-description">
-    <p>THis function will download a package
-with all its dependencies to a zipped archive,
-to them be installed within TSD using
-<code><a href='tsd_package_install.html'>tsd_package_install</a></code>.</p>
-    </div>
-
-    <pre class="usage"><span class='fu'>tsd_package_prepare</span>(
-  <span class='no'>package</span>,
-  <span class='kw'>folder</span> <span class='kw'>=</span> <span class='no'>package</span>,
-  <span class='kw'>repos</span> <span class='kw'>=</span> <span class='st'>"https://cran.rstudio.com/"</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>zip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
-
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>package</th>
-      <td><p>name of package to install</p></td>
-    </tr>
-    <tr>
-      <th>folder</th>
-      <td><p>folder to place all necessary files in</p></td>
-    </tr>
-    <tr>
-      <th>repos</th>
-      <td><p>CRAN mirror to download from</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>logical if status messages should be printed</p></td>
-    </tr>
-    <tr>
-      <th>zip</th>
-      <td><p>logical, if folder should be zipped at the end</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional arguments to functions <code><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></code>
-and <code><a href='https://rdrr.io/r/utils/available.packages.html'>available.packages</a></code></p></td>
-    </tr>
-    </table>
-
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
-
-    <p>returns nothing, but creates a folder and zip archive</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'>tsd_package_prepare</span>(<span class='st'>"devtools"</span>)
-
-<span class='fu'>tsd_package_prepare</span>(<span class='st'>"dplyr"</span>, <span class='kw'>folder</span> <span class='kw'>=</span> <span class='st'>"dplyr_pkg"</span>)
-
-<span class='fu'>tsd_package_prepare</span>(<span class='st'>"dplyr"</span>, <span class='kw'>repos</span> <span class='kw'>=</span> <span class='st'>"https://cran.uib.no/"</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-
-}</div></pre>
+    <div id="tsdrtools-0-1-01" class="section level1">
+<h1 class="page-header" data-toc-text="0.1.01">
+<a href="#tsdrtools-0-1-01" class="anchor"></a>tsdrtools 0.1.01</h1>
+<ul>
+<li>Added a <code>NEWS.md</code> file to track changes to the package.</li>
+<li>Installs are no longer checked by <code>installed.packages</code>but by catching errors during install</li>
+</ul>
+</div>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
 
 
