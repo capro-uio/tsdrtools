@@ -47,6 +47,8 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
   if(verbose) cat("Downloading packages:\n")
   l_pkgs <- utils::download.packages(pkgs, folder, quiet = !verbose, repos = repos, ...)[,2]
 
+  if(package == "stringi") stringi_workaround_prepare(folder, verbose = verbose)
+
   # Check that all packages are downloaded and in the correct folder
   d_pkgs <- list.files(folder, pattern = "tar.gz")
 
@@ -154,4 +156,23 @@ core_pkgs <- function(){
     "tools",
     "translations",
     "utils")
+}
+
+stringi_workaround_prepare <- function(folder, verbose = TRUE){
+  icudt61l <- "http://www.ibspan.waw.pl/~gagolews/stringi/icudt61l.zip"
+  utils::download.file(icudt61l, file.path(folder, "icudt61l.zip"), quiet = !verbose)
+}
+
+stringi_workaround_install <- function(package, folder){
+  if(grepl("stringi", package)){
+    folder <- normalizePath(folder)
+    paste0("ICUDT_DIR=", folder)
+  }else{
+    "getOption('configure.vars')"
+  }
+}
+
+check_installed <- function(x){
+  if(any(grepl("non-zero", x))) return(FALSE)
+  return(TRUE)
 }
