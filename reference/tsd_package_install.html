@@ -84,7 +84,7 @@ this function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tsdrtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.01</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.02</span>
       </span>
     </div>
 
@@ -160,7 +160,7 @@ function, install said packages using
 this function.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tsd_package_install</span>(<span class='no'>zip_file</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>tsd_package_install</span>(<span class='no'>zip_file</span>, <span class='kw'>lib</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/libPaths.html'>.libPaths</a></span>()[<span class='fl'>1</span>], <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -170,8 +170,8 @@ this function.</p>
       <td><p>path to zipped file</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>logical if status messages should be printed</p></td>
+      <th>lib</th>
+      <td><p>library folder to install to</p></td>
     </tr>
     <tr>
       <th>...</th>
