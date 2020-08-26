@@ -84,7 +84,7 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
 #'
 #'
 #' @param zip_file path to zipped file
-#' @param verbose logical if status messages should be printed
+#' @param lib library folder to install to
 #' @param ... additional arguments to functions \code{\link[utils]{install.packages}}
 #' and \code{\link[utils]{available.packages}}
 #'
@@ -99,7 +99,7 @@ tsd_package_prepare <- function(package, folder = package, repos = "https://cran
 #'
 #' tsd_package_install("devtools.zip")
 #' }
-tsd_package_install <- function(zip_file, verbose = TRUE, ...){
+tsd_package_install <- function(zip_file, lib = .libPaths()[1], ...){
   stopifnot(file.exists(zip_file))
 
   # if folder is zipped, unzip
@@ -110,32 +110,31 @@ tsd_package_install <- function(zip_file, verbose = TRUE, ...){
   pkgs <- list.files(folder, pattern = "tar.gz", full.names = TRUE)
   pkgs <- pkgs[sapply(order, grep, x = pkgs)]
 
+  j <- do.call(rbind, strsplit(gsub("\\.tar\\.gz", "", order), "_"))
+  j <- as.data.frame(j, stringsAsFactors = FALSE)
+  names(j) <- c("pkg", "version")
+
   ff <- list()
 
   for(k in 1:length(pkgs)){
-    ff[[k]] <- tryCatch(
-        utils::install.packages(pkgs[k],
-                                verbose = TRUE,
-                                quiet = FALSE,
-                                type = "source",
-                                repos = NULL, ...),
-        error = function(e) e$message,
-        warning = function(w) w$message,
-        message = function(m) m$message
+    ff[[k]] <- utils::capture.output(type = "output",
+      install.packages(pkgs[k],
+                       repos = NULL,
+                       lib = lib,
+                       configure.vars = stringi_workaround_install(pkgs[k], folder)
       )
+    )
   }
 
-  pkgs_test <- unlist(lapply(strsplit(order, "_"), function(x) x[1]))
-  suc <- ifelse(sapply(unlist(ff), function(x) grepl("non-zero", x)),
-                "failed", "success")
+  ff2 <- unlist(lapply(ff, check_installed))
+  j$success <- ifelse(ff2, "success", "failed")
 
-  j <- data.frame(
-    success = suc,
-    pkg = paste0(pkgs_test, "\n"),
-    stringsAsFactors = FALSE
-  )
+  j <- j[,c("success", "pkg", "version")]
 
-  k <- apply(j, 1, function(x) cat(x, sep="\t"))
+  k <- apply(j, 1, function(x){
+    cat(x, sep="\t")
+    cat("\n")
+  })
   invisible(j)
 }
 

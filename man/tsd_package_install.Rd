@@ -4,12 +4,12 @@
 \alias{tsd_package_install}
 \title{Install package on TSD from archive}
 \usage{
-tsd_package_install(zip_file, verbose = TRUE, ...)
+tsd_package_install(zip_file, lib = .libPaths()[1], ...)
 }
 \arguments{
 \item{zip_file}{path to zipped file}
 
-\item{verbose}{logical if status messages should be printed}
+\item{lib}{library folder to install to}
 
 \item{...}{additional arguments to functions \code{\link[utils]{install.packages}}
 and \code{\link[utils]{available.packages}}}
