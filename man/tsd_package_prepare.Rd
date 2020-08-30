@@ -7,7 +7,16 @@
 tsd_package_prepare(
   package,
   folder = package,
-  repos = "https://cran.rstudio.com/",
+  repos = getOption("repos"),
+  verbose = TRUE,
+  zip = TRUE,
+  ...
+)
+
+tsd_package_prepare(
+  package,
+  folder = package,
+  repos = getOption("repos"),
   verbose = TRUE,
   zip = TRUE,
   ...
@@ -29,14 +38,29 @@ and \code{\link[utils]{available.packages}}}
 }
 \value{
 returns nothing, but creates a folder and zip archive
+
+returns nothing, but creates a folder and zip archive
 }
 \description{
 THis function will download a package
 with all its dependencies to a zipped archive,
 to them be installed within TSD using
 \code{\link{tsd_package_install}}.
+
+THis function will download a package
+with all its dependencies to a zipped archive,
+to them be installed within TSD using
+\code{\link{tsd_package_install}}.
 }
 \examples{
+\dontrun{
+tsd_package_prepare("devtools")
+
+tsd_package_prepare("dplyr", folder = "dplyr_pkg")
+
+tsd_package_prepare("dplyr", repos = "https://cran.uib.no/", verbose = FALSE)
+
+}
 \dontrun{
 tsd_package_prepare("devtools")
 

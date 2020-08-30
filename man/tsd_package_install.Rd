@@ -4,17 +4,35 @@
 \alias{tsd_package_install}
 \title{Install package on TSD from archive}
 \usage{
-tsd_package_install(zip_file, lib = .libPaths()[1], ...)
+tsd_package_install(
+  zip_file,
+  lib = .libPaths()[1],
+  opts = "",
+  verbose = TRUE,
+  ...
+)
+
+tsd_package_install(
+  zip_file,
+  lib = .libPaths()[1],
+  opts = "",
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{zip_file}{path to zipped file}
 
 \item{lib}{library folder to install to}
 
+\item{verbose}{logical. print progress to console}
+
 \item{...}{additional arguments to functions \code{\link[utils]{install.packages}}
 and \code{\link[utils]{available.packages}}}
 }
 \value{
+vector of successful or failed package installs
+
 vector of successful or failed package installs
 }
 \description{
@@ -23,8 +41,20 @@ packages for install outside of TSD
 using the \code{\link{tsd_package_prepare}}
 function, install said packages using
 this function.
+
+After downloading and preparing the
+packages for install outside of TSD
+using the \code{\link{tsd_package_prepare}}
+function, install said packages using
+this function.
 }
 \examples{
+\dontrun{
+# prepare a package first
+tsd_package_prepare("devtools")
+
+tsd_package_install("devtools.zip")
+}
 \dontrun{
 # prepare a package first
 tsd_package_prepare("devtools")
