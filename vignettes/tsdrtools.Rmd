@@ -19,9 +19,9 @@ library(tsdrtools)
 ```
 
 The goal of tsdrtools is to make it easier for R users of TSD to install packages that fail install using the TSD mini-CRAN. 
-Certain R-packages require compilation outside of TSD before they can be installed, and as such can be burdensom for some users to administer.
+Certain R-packages require compilation outside of TSD before they can be installed, and as such can be burdensome for some users to administer.
 
-Since packages often have a muriad of dependencies, this process can becomes increasingly cumbersome, as all these extra packages also need to be obtained, which again might require special compilation. 
+Since packages often have a myriad of dependencies, this process can becomes increasingly cumbersome, as all these extra packages also need to be obtained, which again might require special compilation. 
 
 In the two step procedure here, a package is downloaded together with all dependent packages, zipped into an archive for easy import into TSD, where it can be unzipped and installed using a special function.
 
@@ -42,7 +42,7 @@ install.packages("/path/to/tsdrtools.tar.gz", repo = NULL)
 ```
 
 
-## Example
+## Examples
 
 This package contains two main functions:
 
@@ -56,8 +56,39 @@ library(tsdrtools)
 tsd_package_prepare("dplyr")
 
 # within TSD
-tsd_package_prepare("dplyr.zip")
+status <- tsd_package_prepare("dplyr.zip")
 ```
+
+By saving the output of `tsd_package_prepare` you can scope the potential error messages from the install after they have occurred. 
+Failed installs may happen not only because we have yet to discover some issue with certain packages, but also because there might be OS dependencies that a package needs to work, which might not be installed on your TSD VM. 
+In such cases, having the error and showing it to IT would help them get the necessary OS libraries installed for you.
+
+```{r, echo = FALSE}
+deps <- tsdrtools:::get_dependency_tree("dplyr", repos = "https://cran.rstudio.com/", verbose = FALSE)
+pkgs <- as.data.frame(available.packages(repos = "https://cran.rstudio.com/" ))
+pkgs <- pkgs[na.omit(match(deps, pkgs$Package)),c("Package", "Version")]
+
+status <- list(
+  success = data.frame(
+    success = ifelse(pkgs$Package == "crayon", "failed", "success"),
+    pkg = pkgs$Package,
+    version =  pkgs$Version
+  ),
+  error_logs = list(
+    crayon = c("The full build error", "will appear here.", "This is just a mock example")
+  )
+)
+
+status <- as_tsdrtools_install(status)
+```
+
+```{r}
+# View install status
+status
+
+error_logs(status)
+```
+
 
 ## Limitations
 Currently the package will only prepare and install packages that are available on CRAN. 

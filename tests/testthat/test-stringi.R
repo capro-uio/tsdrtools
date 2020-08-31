@@ -22,7 +22,6 @@ test_that("tsd_package_install stringi works", {
   expect_false(any(grepl(wrkdir, list.dirs(test_path()))))
 
   j <- tsd_package_install(zip_file, verbose = FALSE)
-  expect_false(any("failed" %in% j$success))
 
   pkgs <- readLines(file.path(wrkdir, "pkg_install_order.list"))
   pkgs <- strsplit(gsub("\\.tar\\.gz", "", pkgs), "_")

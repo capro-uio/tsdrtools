@@ -20,6 +20,22 @@ The tidyverse meta-package has become a well-used suite of packages for data han
 However, the tidyverse has some system and package dependencies that makes it tricky to install on TSD. 
 Mainly because it depends on the [stringi](https://cran.r-project.org/web/packages/stringi/index.html) package, which needs internet access to install text information that cannot be stored within the main package itself. 
 
+## Pre-installed bundles
+There are three modules on TSD where it have bundled popular packages for you within the R-package it self.
+If you are happy using the modules, you can use either of:
+
+- R/3.5.1-foss-2018b  
+- R/3.6.0-foss-2019a  
+- R/4.0.0-foss-2020a  
+
+```{bash}
+# example 
+module load R/4.0.0-foss-2020a
+
+# Then start R as you would normally
+```
+
+
 ## Prepare the tidyverse packages for install
 Firstly, prepare all the necessary packages and dependncies for install on TSD using the `tsd_package_prepate()` function.
 
@@ -41,41 +57,9 @@ Needed OS libs:
 
 - libssh2-devel  
 - libssl-dev  
-- libxml2-dev  
+- libxml2-devel 
 - libcurl-devel  
 - libpng-devel (optional)  
-- librgl-dev (optional)
-
-
-### C++ compiler
-Several of the tidyverse packages also need a c++ compiler to work (dplyr for instance). 
-You can access such a compiler through the TSD software modules. 
-
-```{bash}
-module load gcc
-```
-
-By loading in `gcc` (GNU c++ compiler) _before_ starting R, this problem is solved. 
-We highly recommend creating a `.bash_profile` in your home directory that automatically loads in `gcc` for you at terminal start-up if you regularly use R-packages that require it. 
-
-```{sh}
-# create file
-touch $HOME/.bash_profile
-
-# open to edit
-gedit $HOME/.bash_profile
-```
-
-Add
-```{bash}
-#!/bin/bash
-
-# load gcc for R-pkgs
-module load gcc
-```
-
-save and restart your terminal. 
-`gcc` should now always be available when you start R from the terminal. 
 
 ## Install
 Once all the libs are installed by IT, and you load gcc before starting R, you are ready to get tidyverse installed.
@@ -88,4 +72,5 @@ This should now hopefully install without errors.
 If you still cannot install tidyverse with these steps, report an [issue](https://github.com/LCBC-UiO/tsdrtools/issues).
 If you know of additional needed steps for successful install, either do a direct PR for adding that information to this document, or , report an [issue](https://github.com/LCBC-UiO/tsdrtools/issues).
 We'd love feedback to improve the instructions!
+
 
