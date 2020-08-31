@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • tsdrtools</title>
+<title>Get package dependency tree — get_dependency_tree • tsdrtools</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,7 +46,13 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Get package dependency tree — get_dependency_tree" />
+<meta property="og:description" content="This function will return all package dependencies
+for any given package, including backwards dependency
+for all.
+The function mainly prints out the dependency tree
+in the console, but also returns all packages
+required for build (uniquely)." />
 <meta property="og:image" content="/logo.svg" />
 
 
@@ -66,7 +72,7 @@
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -140,144 +146,65 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Get package dependency tree</h1>
+    <small class="dont-index">Source: <a href='https://github.com/LCBC-UiO/tsdrtools/blob/master/R/utils.R'><code>R/utils.R</code></a></small>
+    <div class="hidden name"><code>get_dependency_tree.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>This function will return all package dependencies
+for any given package, including backwards dependency
+for all.
+The function mainly prints out the dependency tree
+in the console, but also returns all packages
+required for build (uniquely).</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>get_dependency_tree</span>(
+  <span class='no'>package</span>,
+  <span class='kw'>i</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Depends"</span>, <span class='st'>"Imports"</span>),
+  <span class='kw'>repos</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"repos"</span>),
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      
-      
-    </tbody><tbody>
-      
-      
-      <tr>
-        
-        <td>
-          <p><code><a href="as_install_error.html">as_install_error()</a></code> </p>
-        </td>
-        <td><p>Create install_error</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_tsdrtools_install.html">as_tsdrtools_install()</a></code> </p>
-        </td>
-        <td><p>Create tsdrtools_install</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="as_tsdrtools_status.html">as_tsdrtools_status()</a></code> </p>
-        </td>
-        <td><p>Create tsdrtools_status</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="core_pkgs.html">core_pkgs()</a></code> </p>
-        </td>
-        <td><p>R core packages</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="error_logs.html">error_logs()</a></code> </p>
-        </td>
-        <td><p>Extract error logs from tsdrstools_install-object</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="get_dependency_tree.html">get_dependency_tree()</a></code> </p>
-        </td>
-        <td><p>Get package dependency tree</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="install_error.html">install_error()</a></code> </p>
-        </td>
-        <td><p>Constructor for install_error</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is.install_error.html">is.install_error()</a></code> </p>
-        </td>
-        <td><p>Validate install_error</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is.tsdrtools_status.html">is.tsdrtools_status()</a></code> </p>
-        </td>
-        <td><p>Validate tsdrtools_status</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_install_error.html">is_install_error()</a></code> </p>
-        </td>
-        <td><p>Validate install_error</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_tsdrtools_install.html">is_tsdrtools_install()</a></code> </p>
-        </td>
-        <td><p>Validate tsdrtools_install</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="is_tsdrtools_status.html">is_tsdrtools_status()</a></code> </p>
-        </td>
-        <td><p>Validate tsdrtools_status</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="package_workarounds.html">package_workarounds()</a></code> </p>
-        </td>
-        <td><p>Retrieve package workaround</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="stringi_workaround.html">stringi_workaround()</a></code> </p>
-        </td>
-        <td><p>Function for stringi workaround</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tsd_package_install.html">tsd_package_install()</a></code> </p>
-        </td>
-        <td><p>Install package on TSD from archive</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tsd_package_prepare.html">tsd_package_prepare()</a></code> </p>
-        </td>
-        <td><p>Prepare R package for TSD install</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tsdrtools_install.html">tsdrtools_install()</a></code> </p>
-        </td>
-        <td><p>Constructor for tsdrtools_install</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="tsdrtools_status.html">tsdrtools_status()</a></code> </p>
-        </td>
-        <td><p>Constructor for tsdrtools_status</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>package</th>
+      <td><p>name of package. character.</p></td>
+    </tr>
+    <tr>
+      <th>i</th>
+      <td><p>integer. Used in recursive call to package dependency retrieval.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Character vector, a subset of c("Depends", "Imports", "LinkingTo", "Suggests", "Enhances")</p></td>
+    </tr>
+    <tr>
+      <th>repos</th>
+      <td><p>character vector. Addresses of CRAN mirror(s)</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>logical. If function should be talkative.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments to functions <code><a href='https://rdrr.io/r/utils/available.packages.html'>available.packages</a></code></p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>character vector of unique packages</p>
+
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>

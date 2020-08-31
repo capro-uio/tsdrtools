@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tsdrtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.02</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.03</span>
       </span>
     </div>
 
@@ -112,8 +112,8 @@
     
     
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tsdrtools</span>)</pre></body></html></div>
-<p>The goal of tsdrtools is to make it easier for R users of TSD to install packages that fail install using the TSD mini-CRAN. Certain R-packages require compilation outside of TSD before they can be installed, and as such can be burdensom for some users to administer.</p>
-<p>Since packages often have a muriad of dependencies, this process can becomes increasingly cumbersome, as all these extra packages also need to be obtained, which again might require special compilation.</p>
+<p>The goal of tsdrtools is to make it easier for R users of TSD to install packages that fail install using the TSD mini-CRAN. Certain R-packages require compilation outside of TSD before they can be installed, and as such can be burdensome for some users to administer.</p>
+<p>Since packages often have a myriad of dependencies, this process can becomes increasingly cumbersome, as all these extra packages also need to be obtained, which again might require special compilation.</p>
 <p>In the two step procedure here, a package is downloaded together with all dependent packages, zipped into an archive for easy import into TSD, where it can be unzipped and installed using a special function.</p>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
@@ -125,9 +125,9 @@
 <p>Transfer the package to TSD (import it), and install as a source package.</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"/path/to/tsdrtools.tar.gz"</span>, <span class="kw">repo</span> <span class="kw">=</span> <span class="kw">NULL</span>)</pre></body></html></div>
 </div>
-<div id="example" class="section level2">
+<div id="examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example" class="anchor"></a>Example</h2>
+<a href="#examples" class="anchor"></a>Examples</h2>
 <p>This package contains two main functions:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -141,7 +141,20 @@
 <span class="fu"><a href="../reference/tsd_package_prepare.html">tsd_package_prepare</a></span>(<span class="st">"dplyr"</span>)
 
 <span class="co"># within TSD</span>
-<span class="fu"><a href="../reference/tsd_package_prepare.html">tsd_package_prepare</a></span>(<span class="st">"dplyr.zip"</span>)</pre></body></html></div>
+<span class="no">status</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/tsd_package_prepare.html">tsd_package_prepare</a></span>(<span class="st">"dplyr.zip"</span>)</pre></body></html></div>
+<p>By saving the output of <code>tsd_package_prepare</code> you can scope the potential error messages from the install after they have occurred. Failed installs may happen not only because we have yet to discover some issue with certain packages, but also because there might be OS dependencies that a package needs to work, which might not be installed on your TSD VM. In such cases, having the error and showing it to IT would help them get the necessary OS libraries installed for you.</p>
+<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="co"># View install status</span>
+<span class="no">status</span>
+<span class="co">#&gt; # Offline installation status</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; # Installation succeeded for 1 packages: ellipsis</span>
+<span class="co">#&gt; # Installation *failed* for 1 packages: crayon</span>
+
+<span class="fu"><a href="../reference/error_logs.html">error_logs</a></span>(<span class="no">status</span>)
+<span class="co">#&gt; #### crayon</span>
+<span class="co">#&gt; The full build error</span>
+<span class="co">#&gt; will appear here.</span>
+<span class="co">#&gt; This is just a mock example</span></pre></body></html></div>
 </div>
 <div id="limitations" class="section level2">
 <h2 class="hasAnchor">

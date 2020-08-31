@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tsdrtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.02</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.03</span>
       </span>
     </div>
 
@@ -112,11 +112,27 @@
     
     
 <p>The tidyverse meta-package has become a well-used suite of packages for data handling and visualisation. However, the tidyverse has some system and package dependencies that makes it tricky to install on TSD. Mainly because it depends on the <a href="https://cran.r-project.org/web/packages/stringi/index.html">stringi</a> package, which needs internet access to install text information that cannot be stored within the main package itself.</p>
+<div id="pre-installed-bundles" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pre-installed-bundles" class="anchor"></a>Pre-installed bundles</h2>
+<p>There are three modules on TSD where it have bundled popular packages for you within the R-package it self. If you are happy using the modules, you can use either of:</p>
+<ul>
+<li>R/3.5.1-foss-2018b<br>
+</li>
+<li>R/3.6.0-foss-2019a<br>
+</li>
+<li>R/4.0.0-foss-2020a</li>
+</ul>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># example </span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="ex">module</span> load R/4.0.0-foss-2020a</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># Then start R as you would normally</span></a></code></pre></div>
+</div>
 <div id="prepare-the-tidyverse-packages-for-install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#prepare-the-tidyverse-packages-for-install" class="anchor"></a>Prepare the tidyverse packages for install</h2>
 <p>Firstly, prepare all the necessary packages and dependncies for install on TSD using the <code>tsd_package_prepate()</code> function.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tsdrtools</span>)
+<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">tsdrtools</span>)
 <span class="fu"><a href="../reference/tsd_package_prepare.html">tsd_package_prepare</a></span>(<span class="st">"tidyverse"</span>)</pre></body></html></div>
 <p>All the tidyverse packages and their dependencies will now download into a file called <code>tidyverse.zip</code>. Import this file into your TSD project.</p>
 </div>
@@ -133,39 +149,18 @@
 </li>
 <li>libssl-dev<br>
 </li>
-<li>libxml2-dev<br>
-</li>
+<li>libxml2-devel</li>
 <li>libcurl-devel<br>
 </li>
-<li>libpng-devel (optional)<br>
-</li>
-<li>librgl-dev (optional)</li>
+<li>libpng-devel (optional)</li>
 </ul>
-</div>
-<div id="c-compiler" class="section level3">
-<h3 class="hasAnchor">
-<a href="#c-compiler" class="anchor"></a>C++ compiler</h3>
-<p>Several of the tidyverse packages also need a c++ compiler to work (dplyr for instance). You can access such a compiler through the TSD software modules.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ex">module</span> load gcc</a></code></pre></div>
-<p>By loading in <code>gcc</code> (GNU c++ compiler) <em>before</em> starting R, this problem is solved. We highly recommend creating a <code>.bash_profile</code> in your home directory that automatically loads in <code>gcc</code> for you at terminal start-up if you regularly use R-packages that require it.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="co"># create file</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="fu">touch</span> <span class="va">$HOME</span>/.bash_profile</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co"># open to edit</span></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="ex">gedit</span> <span class="va">$HOME</span>/.bash_profile</a></code></pre></div>
-<p>Add</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="co">#!/bin/bash</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co"># load gcc for R-pkgs</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="ex">module</span> load gcc</a></code></pre></div>
-<p>save and restart your terminal. <code>gcc</code> should now always be available when you start R from the terminal.</p>
 </div>
 </div>
 <div id="install" class="section level2">
 <h2 class="hasAnchor">
 <a href="#install" class="anchor"></a>Install</h2>
 <p>Once all the libs are installed by IT, and you load gcc before starting R, you are ready to get tidyverse installed.</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="../reference/tsd_package_prepare.html">tsd_package_prepare</a></span>(<span class="st">"path/to/tidyverse.zip"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="../reference/tsd_package_prepare.html">tsd_package_prepare</a></span>(<span class="st">"path/to/tidyverse.zip"</span>)</pre></body></html></div>
 <p>This should now hopefully install without errors. If you still cannot install tidyverse with these steps, report an <a href="https://github.com/LCBC-UiO/tsdrtools/issues">issue</a>. If you know of additional needed steps for successful install, either do a direct PR for adding that information to this document, or , report an <a href="https://github.com/LCBC-UiO/tsdrtools/issues">issue</a>. We’d love feedback to improve the instructions!</p>
 </div>
   </div>

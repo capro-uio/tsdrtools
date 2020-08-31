@@ -47,7 +47,7 @@
 
 
 <meta property="og:title" content="Prepare R package for TSD install — tsd_package_prepare" />
-<meta property="og:description" content="THis function will download a package
+<meta property="og:description" content="This function will download a package
 with all its dependencies to a zipped archive,
 to them be installed within TSD using
 tsd_package_install." />
@@ -83,7 +83,7 @@ tsd_package_install." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tsdrtools</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.02</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.03</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@ tsd_package_install." />
     </div>
 
     <div class="ref-description">
-    <p>THis function will download a package
+    <p>This function will download a package
 with all its dependencies to a zipped archive,
 to them be installed within TSD using
 <code><a href='tsd_package_install.html'>tsd_package_install</a></code>.</p>
@@ -161,7 +161,7 @@ to them be installed within TSD using
     <pre class="usage"><span class='fu'>tsd_package_prepare</span>(
   <span class='no'>package</span>,
   <span class='kw'>folder</span> <span class='kw'>=</span> <span class='no'>package</span>,
-  <span class='kw'>repos</span> <span class='kw'>=</span> <span class='st'>"https://cran.rstudio.com/"</span>,
+  <span class='kw'>repos</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"repos"</span>),
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>zip</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='no'>...</span>
@@ -172,19 +172,19 @@ to them be installed within TSD using
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>package</th>
-      <td><p>name of package to install</p></td>
+      <td><p>name of package. character.</p></td>
     </tr>
     <tr>
       <th>folder</th>
-      <td><p>folder to place all necessary files in</p></td>
+      <td><p>character. folder to place all necessary files in</p></td>
     </tr>
     <tr>
       <th>repos</th>
-      <td><p>CRAN mirror to download from</p></td>
+      <td><p>character vector. Addresses of CRAN mirror(s)</p></td>
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>logical if status messages should be printed</p></td>
+      <td><p>logical. If function should be talkative.</p></td>
     </tr>
     <tr>
       <th>zip</th>
