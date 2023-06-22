@@ -42,16 +42,21 @@ package_workarounds <- function(package,
                                 verbose = TRUE){
   type <- match.arg(type,
                     c("prepare", "install"))
-
-  if(any(grepl("stringi", package)))
-    return(stringi_workaround(folder, type, verbose))
+  if(!check_exceptions(type))
+    return()
+  func <- eval(parse(text = sprintf("%s_workaround", package)))
+  func(folder, type, verbose)
 }
+
+workarounds <- c(
+  "stringi" = "prepare"
+)
 
 #' Function for stringi workaround
 #'
 #' stringi requires download of a bundle
 #' to work. If we want to install offline,
-#' the bundle needs to be downloaded and
+#' the bundle needs to be downloaded@ and
 #' ported with the package tar.
 #' For \code{type = "prepare"} the bundle is
 #' downloaded into the folder with the pacakge
@@ -62,23 +67,28 @@ package_workarounds <- function(package,
 #' download the bundle during install.
 #'
 #' @inheritParams package_workarounds
+#' @noRd
 stringi_workaround <- function(folder,
                                type,
                                verbose = TRUE
 ){
 
   type <- match.arg(type,
-                    c("prepare", "install"))
+                    workarounds["stringi"])
 
-  if(type == "prepare"){
-    icudt61l <- "http://www.ibspan.waw.pl/~gagolews/stringi/icudt61l.zip"
-    utils::download.file(icudt61l,
-                         file.path(folder, "icudt61l.zip"),
-                         quiet = !verbose)
-    return()
-  }else{
-    folder <- normalizePath(folder)
-    x <- paste0("--configure-vars=\"ICUDT_DIR=", folder, "\"")
-    return(x)
-  }
+  tmpf <- tempfile("stringi", fileext = ".zip")
+  k <- download.file(
+    "https://github.com/gagolews/stringi/archive/master.zip",
+    tmpf)
+  k <- utils::unzip(tmpf,
+                    exdir = folder,
+                    overwrite = TRUE)
+  invisible(lapply(k, Sys.chmod, mode = "775"))
+  Sys.chmod(folder, mode = "775", use_umask = FALSE)
+  rbig <- readLines(k[1])
+  rbig <- rbig[!grepl("icu..\\/data", rbig)]
+  writeLines(rbig, k[1], sep = "\n")
+  system(sprintf("cd %s; R CMD build %s", folder, "stringi-master"))
+  unlink(file.path(folder, "stringi-master"), recursive = TRUE)
+  return()
 }

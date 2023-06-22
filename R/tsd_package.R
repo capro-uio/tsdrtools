@@ -27,60 +27,91 @@
 #'
 #' }
 tsd_package_prepare <- function(package,
-                                folder = package,
+                                folder = NULL,
                                 repos = getOption("repos"),
                                 verbose = TRUE,
                                 zip = TRUE,
                                 ...) {
+  k <- available.packages()
+  pak <- grep(sprintf("^%s$", package), k[,1])
+  if(length(pak) == 0)
+    cli::cli_abort("Package not available, did you spell it correctly?")
+  if(is.null(folder))
+    folder <- sprintf("./%s_%s", package, k[pak, 2])
+  if(!dir.exists(folder))
+    dir.create(folder, recursive = TRUE, showWarnings = FALSE)
+  folder <- normalizePath(folder)
 
-  if(missing(package)) stop("package to prepare is missing.")
+  if(missing(package))
+    cli::cli_abort("package to prepare is missing.")
 
   ## Get the list of packages to download, including any dependencies:
-  if(verbose) cat("Finding all dependencies.  Please wait...\n")
-  pkgs <- get_dependency_tree(package,
-                              i = 1,
-                              type = c("Depends", "Imports"),
-                              repos = repos,
-                              ...,
-                              verbose = FALSE)
-  pkgs <- c(pkgs, package)
+  if(verbose)
+    cli::cli_alert("Finding all dependencies. Please wait...\n")
+  pkgs <- pak::pkg_deps_tree(package)
+  pkgs <- c(pkgs$package, package)
   pkgs <- pkgs[!pkgs %in% core_pkgs()]
 
-  if(!dir.exists(folder)) dir.create(folder, recursive = TRUE)
+  dl_paks <- pak::pkg_download(
+    package,
+    dest_dir = folder,
+    dependencies = NA,
+    r_versions = "4.4",
+    platforms = c("source", "windows"))
+  browser()
 
-  ## Download the packages, saving their order
-  if(verbose) cat("Downloading packages:\n")
-  l_pkgs <- utils::download.packages(pkgs, folder, quiet = !verbose, repos = repos, ...)[,2]
+  install.packages("psych", repos = folder, type = "source")
 
-  jj <- package_workarounds(package = pkgs,
-                            folder = folder,
-                            type = "prepare",
-                            verbose = verbose)
+  pfiles <- list.files(folder,
+             "tar.gz$",
+             full.names = TRUE,
+             recursive = TRUE)
+
+  k <- mapply(file.copy,
+         from = pfiles,
+         to = file.path(folder, basename(pfiles))
+         )
+
+  # do the workarounds
+  lapply(pkgs[pkgs %in% names(except)],
+         package_workarounds,
+         folder = folder,
+         type = "prepare",
+         verbose = verbose)
 
   # Check that all packages are downloaded and in the correct folder
   d_pkgs <- list.files(folder, pattern = "tar.gz")
 
-  pkg_check <- basename(l_pkgs) %in% d_pkgs
-
-  if(any(!pkg_check)){
-    cat("The following dependencies have not been downloaded:\n")
-    cat(basename(l_pkgs[!pkg_check]))
+  pkg_check <-sapply(pkgs,
+                     function(x) grep(sprintf("^%s_", x), d_pkgs))
+  if(inherits(pkg_check, "list")){
+    cli::cli_warn("The following dependencies have not been downloaded:")
+    cli::cli_bullets(names(pkg_check[sapply(pkg_check, length) == 0]))
+    cli::cli_alert("Please report an issue on GitHub for help:")
+    cli::cli_alert_info("https://github.com/LCBC-UiO/tsdrtools/issues")
+    unlink(folder, recursive = TRUE)
+    cli::cli_abort("Exiting process.")
   }
-
-  l_pkgs <- gsub(paste0(folder, "/"), "", l_pkgs)
-  writeLines(l_pkgs,
-             con = file.path(folder, "pkg_install_order.list"))
-
+  writeLines(pkgs,
+             con = file.path(folder, "_pkg_install_order"),
+             sep = "\n")
+  all_files <- list.files(folder,
+                          paste0(pkgs, collapse = "|"),
+                          full.names = TRUE)
   if(zip){
-    if(verbose) cat("zipping folder to prepare for TSD import\n")
-    all_files <- list.files(folder, recursive = TRUE, full.names = TRUE)
-    utils::zip(zipfile = paste0(gsub("/$", "", folder), ".zip"), files = all_files, flags = "-r9Xj")
+    if(verbose)
+      cli::cli_alert("zipping folder to prepare for TSD import")
+    utils::zip(
+      zipfile = paste0(gsub("/$", "", folder), ".zip"),
+      files = all_files,
+      flags = "-r9Xj")
+    unlink(folder, recursive = TRUE)
   }
 
-  if(verbose) cat("\nPackage archive created.",
-                  "Import the package zip file to TSD (https://data.tsd.usit.no/)",
-                  "and continue with the tsd_install_package function.\n")
-
+  if(verbose){
+    cli::cli_alert_success("Package archive created.")
+    cli::cli_alert("Import the package zip file to TSD (https://data.tsd.usit.no/) and continue with the tsd_install_package function.")
+  }
 }
 
 
@@ -116,71 +147,40 @@ tsd_package_install <- function(zip_file,
                                 verbose = TRUE,
                                 ...){
   stopifnot(file.exists(zip_file))
-
   # if folder is zipped, unzip
   folder <- gsub("\\.zip", "", zip_file)
   k <- utils::unzip(zip_file, exdir = folder)
 
-  order <- readLines(file.path(folder, "pkg_install_order.list"))
+  order <- readLines(file.path(folder, "_pkg_install_order"))
   pkgs <- list.files(folder,
                      pattern = "tar.gz$",
                      full.names = TRUE)
-  pkgs <- pkgs[unlist(sapply(order, grep, x = pkgs))]
+  pkgs <- pkgs[sapply(order, grep, x = pkgs)]
+  paks <- do.call(rbind,
+                  strsplit(gsub("\\.tar\\.gz",
+                                "", order),
+                           "_"))
+  paks <- as.data.frame(paks)
+  names(paks) <- c("pkg", "version")
+  paks$paths <- normalizePath(pkgs)
 
-  j <- do.call(rbind, strsplit(gsub("\\.tar\\.gz", "", order), "_"))
-  j <- as.data.frame(j, stringsAsFactors = FALSE)
-  names(j) <- c("pkg", "version")
+  if(verbose)
+    cli::cli_alert_info("Starting installations")
 
-  ff <- ff2 <- ff3 <- list()
-  for(k in 1:length(pkgs)){
-    if(verbose) cat("Installing", j$pkg[k], sep = " ")
-
-    # Create log-file
-    log_file <- paste0(pkgs[k], format(Sys.time(), "%Y%m%d-%H%M%S.txt"))
-    jj <- file.create(log_file)
-
-    # Append options
-    opts2 <- paste(opts,
-                   package_workarounds(pkgs[k],
-                                       folder,
-                                       type ="install",
-                                       verbose = verbose)
-    )
-
-    cmd <- paste("CMD INSTALL",
-                 paste0("--library=", lib),
-                 opts2, pkgs[k])
-
-    # Run system install command
-    system2("R", cmd ,
-            stdout = log_file,
-            stderr = log_file,
-            stdin = log_file)
-
-    # Grab log information and delete file
-    ff[[k]] <- c(cmd, readLines(log_file))
-    names(ff)[k] <- j$pkg[k]
-
-    jj <- file.remove(log_file)
-
-    # check install status
-    ff2[[k]] <- check_installed(ff[[k]])
-    ff3[[k]] <- ifelse(ff2[[k]], "success", "failed")
-
-    if(verbose){
-      cat("\t", ff3[[k]], "\n")
-    }
-
-  }
-
-  j$success <- unlist(ff3)
-
-  j <- j[,c("success", "pkg", "version")]
-
-  errs <- lapply(which(!unlist(ff2)),
-                 function(x) ff[[x]])
-
-  invisible(list(success = j, error_logs = errs))
+  j <- mapply(
+    run_install,
+    path = paks$path,
+    pkg = paks$pkg,
+    version = paks$version,
+    MoreArgs = list(
+      folder = folder,
+      verbose = verbose,
+      opts = opts,
+      lib = lib
+    ), SIMPLIFY = FALSE
+  )
+  names(j) <- paks$pkg
+  tsdrtools_install(j)
 }
 
 

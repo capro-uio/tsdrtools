@@ -6,7 +6,7 @@
 \usage{
 tsd_package_prepare(
   package,
-  folder = package,
+  folder = NULL,
   repos = getOption("repos"),
   verbose = TRUE,
   zip = TRUE,

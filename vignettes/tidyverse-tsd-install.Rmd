@@ -1,5 +1,5 @@
 ---
-title: "Installing the Tidyverse on TSD"
+title: "Installing the Tidyverse on Linux TSD"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{tidyverse-tsd-install}
@@ -17,16 +17,12 @@ knitr::opts_chunk$set(
 ```
 
 The tidyverse meta-package has become a well-used suite of packages for data handling and visualisation.
-However, the tidyverse has some system and package dependencies that makes it tricky to install on TSD. 
+However, the tidyverse has some system and package dependencies that makes it tricky to install on Linux TSD. 
 Mainly because it depends on the [stringi](https://cran.r-project.org/web/packages/stringi/index.html) package, which needs internet access to install text information that cannot be stored within the main package itself. 
 
 ## Pre-installed bundles
 There are three modules on TSD where it have bundled popular packages for you within the R-package it self.
-If you are happy using the modules, you can use either of:
-
-- R/3.5.1-foss-2018b  
-- R/3.6.0-foss-2019a  
-- R/4.0.0-foss-2020a  
+If you are happy using the modules, you can use any of the "foss" modules, like `R/4.0.0-foss-2020a`. 
 
 ```{bash}
 # example 
@@ -37,7 +33,7 @@ module load R/4.0.0-foss-2020a
 
 
 ## Prepare the tidyverse packages for install
-Firstly, prepare all the necessary packages and dependncies for install on TSD using the `tsd_package_prepate()` function.
+Firstly, prepare all the necessary packages and dependencies for install on TSD using the `tsd_package_prepate()` function.
 
 ```{r setup}
 library(tsdrtools)
@@ -58,8 +54,9 @@ Needed OS libs:
 - libssh2-devel  
 - libssl-dev  
 - libxml2-devel 
-- libcurl-devel  
-- libpng-devel (optional)  
+- libcurl-devel
+- harfbuzz-devel
+- libpng-devel (optional, but recommended)  
 
 ## Install
 Once all the libs are installed by IT, and you load gcc before starting R, you are ready to get tidyverse installed.

@@ -4,12 +4,10 @@
 \alias{tsdrtools_install}
 \title{Constructor for tsdrtools_install}
 \usage{
-tsdrtools_install(success, error_logs)
+tsdrtools_install(x)
 }
 \arguments{
-\item{success}{data.frame of class \code{tsdrtools_status}}
-
-\item{error_logs}{list of class \code{install_error}}
+\item{x}{list to with status, package, version and install log}
 }
 \description{
 Constructor for tsdrtools_install

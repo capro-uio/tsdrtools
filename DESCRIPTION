@@ -11,13 +11,14 @@ Description: Some packages are hard to install on the secure closed server of th
     the mini-CRAN service within TSD.
 License: CC BY 4.0
 Encoding: UTF-8
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.3
 Suggests: 
     testthat,
     covr,
     knitr,
     rmarkdown
 Imports: 
+    cli,
     tools,
     utils
 URL: https://github.com/LCBC-UiO/tsdrtools
